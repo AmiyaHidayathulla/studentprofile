@@ -48,7 +48,7 @@ class _ViewProfileState extends State<ViewProfile> {
 
     if (postData != null) {
      student_name = postData['studentName'] as String;
-     student_designation = postData['alumniDesignation'] as String;
+     student_designation = postData['studentDesignation'] as String;
      studentId = widget.studentId;
       skills = (postData['skills'] as List<dynamic>).cast<String>();
       about = postData['about'] as String;

@@ -6,9 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:studentprofile/services/firestore.dart';
+import 'package:studentprofile/student_dashboard.dart';
 
 class StudentNewPostPage extends StatefulWidget {
-  const StudentNewPostPage({super.key});
+ final Student student;
+  const StudentNewPostPage({super.key, required this.student});
+
 
   @override
   State<StudentNewPostPage> createState() => _StudentNewPostPageState();

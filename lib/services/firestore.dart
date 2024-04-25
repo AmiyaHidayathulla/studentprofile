@@ -31,7 +31,21 @@ class FirestoreService {
     });
 
 
-    //To add student details
+   
+
+    //Adding post to student user data
+    DocumentReference StudentId = student.doc(studentId);
+    return StudentId.collection('posts').doc('$studentId$unique').set({
+      'studentId': studentId,
+      'studentName': studentName,
+      'studentDesignation': studentDesignation,
+      'caption': caption,
+      'description': description,
+      'imageURL': imageURL,
+      'timestamp': Timestamp.now(),
+    });
+  }
+   //To add student details
   Future<void> addStudent({
     required String? studentMail,
     required String studentName,
@@ -56,19 +70,6 @@ class FirestoreService {
       'linkedIn': linkedIn,
       'twitter': twitter,
       'mail': mail,
-    });
-  }
-
-    //Adding post to student user data
-    DocumentReference StudentId = student.doc(studentId);
-    return StudentId.collection('posts').doc('$studentId$unique').set({
-      'studentId': studentId,
-      'studentName': studentName,
-      'studentDesignation': studentDesignation,
-      'caption': caption,
-      'description': description,
-      'imageURL': imageURL,
-      'timestamp': Timestamp.now(),
     });
   }
    // Update/Edit post data
@@ -115,8 +116,8 @@ class FirestoreService {
     required String postId,
   }) async {
     print(studentId);
-    final alumniRef = student.doc(studentId);
-    final postSnapshot = await alumniRef.collection('posts').doc(postId).get();
+    final studentRef = student.doc(studentId);
+    final postSnapshot = await studentRef.collection('posts').doc(postId).get();
     return postSnapshot;
   }
   //To delete data inside the profile posts and student_posts

@@ -1,16 +1,4 @@
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:http/http.dart' as http;
-import 'package:studentprofile/services/firestore.dart';
 
 class StudentPostCard extends StatefulWidget {
   //data for likes
@@ -28,7 +16,7 @@ class StudentPostCard extends StatefulWidget {
   final String dpURL;
 
   StudentPostCard({
-    required this.studentId,
+   required this.studentId,
     required this.studentName,
     required this.studentDesignation,
     required this.caption,
@@ -40,297 +28,128 @@ class StudentPostCard extends StatefulWidget {
   });
 
   @override
-  State<StudentPostCard> createState() => _StudentPostCardState();
+  State<StudentPostCard> createState() => _PostCardState();
 }
 
-Future<void> _downloadImageToGallery(String imageURL) async {
-  try {
-    // Get the directory for saving the image
-    Directory? directory = await getExternalStorageDirectory();
-    if (directory != null) {
-      // Create the file path
-      String fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
-      File file = File('${directory.path}/$fileName');
-
-      // Download the image
-      var response = await http.get(Uri.parse(imageURL));
-      await file.writeAsBytes(response.bodyBytes);
-
-      // Add the image to the device's gallery
-      final result = await ImageGallerySaver.saveFile(file.path);
-      print('Image saved to gallery: $result');
-    }
-  } catch (e) {
-    print('Error downloading image: $e');
-  }
-}
-
-class _StudentPostCardState extends State<StudentPostCard> {
-  //data for likes
-  final FirestoreService firestoreService = FirestoreService();
-  final currentUser = FirebaseAuth.instance.currentUser;
-  bool isLiked = false;
-
-  bool isExpanded = false;
-  bool showLikeIcon = false;
-
- 
-
-  @override
-  void initState() {
-    super.initState();
-    isLiked = widget.likes.contains(currentUser!.email);
-  }
-
-  void toggleLike() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-
-    List ref = firestoreService.StudentPostInstances(
-        postId: widget.postId, studentId: widget.studentId);
-    DocumentReference studentPost = ref[0];
-    DocumentReference studentProfile = ref[1];
-
-    if (isLiked) {
-      studentPost.update({
-        'likes': FieldValue.arrayUnion([currentUser!.email])
-      });
-      studentProfile.update({
-        'likes': FieldValue.arrayUnion([currentUser!.email])
-      });
-    } else {
-      studentPost.update({
-        'likes': FieldValue.arrayRemove([currentUser!.email])
-      });
-      studentProfile.update({
-        'likes': FieldValue.arrayRemove([currentUser!.email])
-      });
-    }
-  }
+class _PostCardState extends State<StudentPostCard> {
+  bool isLoved = false;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: () {
-        setState(() {
-          toggleLike();
-          showLikeIcon = true;
-        });
-        Timer(Duration(milliseconds: 500), () {
-          setState(() {
-            showLikeIcon = !showLikeIcon;
-          });
-        });
-      },
-      child: Card(
-        margin: EdgeInsets.all(10.0),
-        elevation: 5.0,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Card(
+      margin: EdgeInsets.all(10.0),
+      elevation: 5.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.studentName,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                widget.studentDesignation,
-                                style:
-                                    TextStyle(fontSize: 12, color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Container for displaying post type
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                         
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                       
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    widget.caption,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: widget.imageURL!.isNotEmpty
-                      ? Image.network(
-                          widget.imageURL,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isExpanded = !isExpanded;
-                      });
-                    },
-                    child: Text(
-                      isExpanded || widget.description.length <= 100
-                          ? widget.description
-                          : '${widget.description!.substring(0, 100)}...',
-                      maxLines: isExpanded ? null : 2,
-                      overflow: isExpanded
-                          ? TextOverflow.clip
-                          : TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                ButtonBar(
-                  alignment: MainAxisAlignment.spaceEvenly,
+                Row(
                   children: [
-                    Column(
-                      children: [
-                        //like button
-                        LikeButton(isLiked: isLiked, onTap: toggleLike),
-
-                        SizedBox(
-                          height: 5,
-                        ),
-
-                        //like count
-                        Text(
-                          widget.likes.length.toString(),
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(widget.dpURL), // Placeholder color
+                     
                     ),
+                    SizedBox(width: 10),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          child: Icon(Icons.send),
-                          onTap: () async {
-                            // Create a temporary file to store the image
-                            final tempDir = await getTemporaryDirectory();
-                            final tempFile =
-                                File('${tempDir.path}/shared_image.jpg');
-
-                            // Download the image to the temporary file
-                            var response =
-                                await http.get(Uri.parse(widget.imageURL));
-                            await tempFile.writeAsBytes(response.bodyBytes);
-
-                            // Share the image and other details
-                            await Share.shareXFiles(
-                              [XFile(tempFile.path)],
-                              text:
-                                  '${widget.studentName} shared a post:\n\n${widget.caption}\n\n${widget.description}',
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
                         Text(
-                          'Share',
-                          style: TextStyle(color: Colors.grey),
+                          widget.studentName,
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        GestureDetector(
-                          child: Icon(Icons.bookmark_border),
-                          onTap: () async {
-                            // Check and request storage permission
-                            PermissionStatus status =
-                                await Permission.storage.request();
-                            if (status.isGranted) {
-                              // Download the image to the gallery
-                              await _downloadImageToGallery(widget.imageURL);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Image downloaded to gallery'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Permission denied to access storage'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
+                        SizedBox(height: 4),
                         Text(
-                          'Save',
-                          style: TextStyle(color: Colors.grey),
+                          widget.studentDesignation,
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
                     ),
                   ],
                 ),
+                PopupMenuButton(
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      child: Text('Option 1'),
+                      value: 'option1',
+                    ),
+                    PopupMenuItem(
+                      child: Text('Option 2'),
+                      value: 'option2',
+                    ),
+                    PopupMenuItem(
+                      child: Text('Option 3'),
+                      value: 'option3',
+                    ),
+                  ],
+                ),
               ],
             ),
-            if (showLikeIcon)
-              Positioned.fill(
-                child: Container(
-                  child: Center(
-                    child: Icon(
-                      Icons.favorite,
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      size: 100,
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              widget.caption,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+           child: widget.imageURL!.isNotEmpty
+                      ? Image.network(
+                          widget.imageURL,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(), 
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(widget.description),
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isLoved = !isLoved;
+                  });
+                },
+                icon: Stack(
+                  children: [
+                    Icon(
+                      Icons.favorite_border,
+                      color: isLoved ? Colors.red : Colors.black,
                     ),
-                  ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.favorite,
+                          color: isLoved ? Colors.red : Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
-        ),
+              IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.bookmark_border),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-
-
-class LikeButton extends StatelessWidget {
-  final bool isLiked;
-  final void Function()? onTap;
-  LikeButton({Key? key, required this.isLiked, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        isLiked ? Icons.favorite : Icons.favorite_border,
-        color: isLiked ? Colors.red : Colors.grey,
-      ),
-    );
-  }
-}

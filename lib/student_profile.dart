@@ -121,8 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProfileForm(),
+                               MaterialPageRoute(
+                                 builder: (context) => ProfileForm(),
                                 ),
                               );
                             },
