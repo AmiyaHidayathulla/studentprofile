@@ -18,7 +18,8 @@ class _ViewProfileState extends State<ViewProfile> {
   late List<dynamic> skills = ['null'];
   late String studentId;
   late String about = 'eg';
-  late String company = 'eg';
+  late String studentDept = 'cs';
+  late String studentYear = '3';
   late String? linkedIn = 'eg';
   late String? twitter = 'eg';
   late String? mail = 'eg';
@@ -52,7 +53,8 @@ class _ViewProfileState extends State<ViewProfile> {
      studentId = widget.studentId;
       skills = (postData['skills'] as List<dynamic>).cast<String>();
       about = postData['about'] as String;
-      company = postData['company'] as String;
+      studentDept = postData['studentDept'] as String;
+      studentYear = postData['studentYear'] as String;
       linkedIn = postData['linkedIn'] as String;
       twitter = postData['twitter'] as String;
       mail = postData['mail'] as String;
@@ -62,7 +64,8 @@ class _ViewProfileState extends State<ViewProfile> {
      student_designation = 'CS Engineer';
       skills = ['null'];
       about = 'eg';
-      company = 'eg';
+      studentDept = 'cs';
+      studentYear = '3';
       linkedIn = 'eg';
       twitter = 'eg';
       mail = 'eg';

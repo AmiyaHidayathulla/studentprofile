@@ -7,9 +7,9 @@ class StudentPostCard extends StatefulWidget {
 
   //data for post
   final String studentId;
- 
   final String studentName;
   final String studentDesignation;
+  
   final String caption;
   final String description;
   final String imageURL;
@@ -19,6 +19,7 @@ class StudentPostCard extends StatefulWidget {
    required this.studentId,
     required this.studentName,
     required this.studentDesignation,
+    
     required this.caption,
     required this.description,
     required this.imageURL,

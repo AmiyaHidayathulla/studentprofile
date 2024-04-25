@@ -50,7 +50,8 @@ class FirestoreService {
     required String? studentMail,
     required String studentName,
     required String studentDesignation,
-   
+    required String studentDept,
+    required String studentYear,
     required String about,
     required List<String> skills,
     String? dpURL,
@@ -64,7 +65,8 @@ class FirestoreService {
       'studentName': studentName,
       'studentDesignation': studentDesignation,
       'skills': skills,
-     
+      'studentDept': studentDept,
+      'studentYear': studentYear,
       'about': about,
       'dpURL': dpURL,
       'linkedIn': linkedIn,

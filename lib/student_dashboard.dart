@@ -13,8 +13,9 @@ class Student {
   String student_name;
   String student_designation;
   List<dynamic> skills;
+  String studentDept;
+  String studentYear;
   String about;
-  String company;
   String? linkedIn;
   String? twitter;
   String? mail;
@@ -26,7 +27,8 @@ class Student {
     required this.student_designation,
     required this.skills,
     required this.about,
-    required this.company,
+    required this.studentDept,
+    required this.studentYear,
     this.linkedIn,
     this.twitter,
     this.mail,
@@ -52,7 +54,8 @@ class _Student_DashboardState extends State<Student_Dashboard> {
   late List<dynamic> skills = ['null'];
   late String studentId='56';
   late String about = 'eg';
-  late String company = 'eg';
+  late String studentDept = 'cs';
+  late String studentYear = '3';
   late String? linkedIn = 'eg';
   late String? twitter = 'eg';
   late String? mail = 'eg';
@@ -88,7 +91,8 @@ class _Student_DashboardState extends State<Student_Dashboard> {
       studentId = currentUser!.email!;
       skills = (postData['skills'] as List<dynamic>).cast<String>();
       about = postData['about'] as String;
-      company = postData['company'] as String;
+      studentDept = postData['studentDept'] as String;
+      studentYear = postData['studentYear'] as String;
       linkedIn = postData['linkedIn'] as String;
       twitter = postData['twitter'] as String;
       mail = postData['mail'] as String;
@@ -98,7 +102,8 @@ class _Student_DashboardState extends State<Student_Dashboard> {
       student_designation = 'CS Engineer';
       skills = ['null'];
       about = 'eg';
-      company = 'eg';
+      studentDept = 'cs';
+      studentYear = '3';
       linkedIn = 'eg';
       twitter = 'eg';
       mail = 'eg';
@@ -125,7 +130,8 @@ class _Student_DashboardState extends State<Student_Dashboard> {
         student_designation: student_designation,
         skills: skills,
         about: about,
-        company: company,
+        studentDept: studentDept,
+        studentYear: studentYear,
         linkedIn: linkedIn,
         twitter: twitter,
         mail: mail,
@@ -163,7 +169,8 @@ class _Student_DashboardState extends State<Student_Dashboard> {
                             student_designation: student_designation,
                             skills: skills,
                             about: about,
-                            company: company,
+                            studentDept: studentDept,
+                            studentYear: studentYear,
                             linkedIn: linkedIn,
                             twitter: twitter,
                             mail: mail,
