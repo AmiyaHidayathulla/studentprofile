@@ -237,8 +237,6 @@ class _ViewProfileState extends State<ViewProfile> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CompanySection(company: company),
-                                  SizedBox(height: width * 0.08),
                                   SkillsSection(skills: skills),
                                 ],
                               )

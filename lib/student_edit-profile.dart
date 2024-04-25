@@ -12,8 +12,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _designationController = TextEditingController();
   TextEditingController _skillsController = TextEditingController();
-  TextEditingController _companyController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,11 +59,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                 decoration: InputDecoration(labelText: 'Skills'),
               ),
               SizedBox(height: 20),
-              TextFormField(
-                controller: _companyController,
-                decoration: InputDecoration(labelText: 'Company Name'),
-              ),
-              SizedBox(height: 20),
+             
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -74,7 +69,6 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     print('Email: ${_emailController.text}');
                     print('Designation: ${_designationController.text}');
                     print('Skills: ${_skillsController.text}');
-                    print('Company: ${_companyController.text}');
                   }
                 },
                 child: Text('Submit'),
@@ -93,7 +87,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
     _emailController.dispose();
     _designationController.dispose();
     _skillsController.dispose();
-    _companyController.dispose();
+   
     super.dispose();
   }
 }

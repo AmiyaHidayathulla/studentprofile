@@ -199,8 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CompanySection(company: widget.student.company),
-                                SizedBox(height: width * 0.08),
+                               
                                 SkillsSection(skills: widget.student.skills),
                               ],
                             )
@@ -365,36 +364,7 @@ class EmailSection extends StatelessWidget {
 }
 
 // CompanySection
-class CompanySection extends StatelessWidget {
-  final String company;
 
-  CompanySection({required this.company});
-
-  @override
-  Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Company',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          company,
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 // PostsSection
 class PostsSection extends StatefulWidget {

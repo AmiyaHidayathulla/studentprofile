@@ -78,6 +78,7 @@ class _StudentNewPostPageState extends State<StudentNewPostPage> {
       caption: _organisationNameController.text,
       description: _detailsController.text,
       imageURL: imageURL,
+      dpURL: ''
     );
     _resetForm();
     // Show a success message or navigate to the home page

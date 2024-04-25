@@ -3,11 +3,6 @@ import 'package:studentprofile/student_dashboard.dart';
 import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
-
-
-
-
-
 import 'package:flutter/material.dart';
 
 void main() async {
