@@ -204,6 +204,38 @@ class _ProfileFormState extends State<ProfileForm> {
                     ),
                     const SizedBox(height: 16.0),
                     const Text(
+                      'Department',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter your department',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: null,
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Year',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Year of study',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: null,
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
                       'Designation',
                       style: TextStyle(
                         fontSize: 18.0,

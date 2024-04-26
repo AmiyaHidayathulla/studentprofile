@@ -10,6 +10,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _deptController = TextEditingController();
+  TextEditingController _yearController = TextEditingController();
   TextEditingController _designationController = TextEditingController();
   TextEditingController _skillsController = TextEditingController();
   
@@ -50,8 +52,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
               ),
               SizedBox(height: 20),
               TextFormField(
-                controller: _designationController,
-                decoration: InputDecoration(labelText: 'Designation'),
+                controller: _deptController,
+                decoration: InputDecoration(labelText: 'Department'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _yearController,
+                decoration: InputDecoration(labelText: 'Year'),
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -67,6 +74,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     // For demonstration, we're just printing the values
                     print('Name: ${_nameController.text}');
                     print('Email: ${_emailController.text}');
+                    print('Department: ${_deptController.text}');
+                    print('Year: ${_yearController.text}');
                     print('Designation: ${_designationController.text}');
                     print('Skills: ${_skillsController.text}');
                   }
@@ -85,6 +94,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
     // Clean up the controllers when the Widget is disposed
     _nameController.dispose();
     _emailController.dispose();
+    _deptController.dispose();
+    _yearController.dispose();
     _designationController.dispose();
     _skillsController.dispose();
    
