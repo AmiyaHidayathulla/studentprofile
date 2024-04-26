@@ -18,7 +18,7 @@ class _ViewProfileState extends State<ViewProfile> {
   late List<dynamic> skills = ['null'];
   late String studentId;
   late String about = 'eg';
-  late String studentDept = 'cs';
+  late String studentDept = 'Computer Science and Engineering';
   late String studentYear = '3';
   late String? linkedIn = 'eg';
   late String? twitter = 'eg';
@@ -64,7 +64,7 @@ class _ViewProfileState extends State<ViewProfile> {
      student_designation = 'CS Engineer';
       skills = ['null'];
       about = 'eg';
-      studentDept = 'cs';
+      studentDept = 'Computer Science and Engineering';
       studentYear = '3';
       linkedIn = 'eg';
       twitter = 'eg';

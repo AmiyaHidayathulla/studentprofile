@@ -331,9 +331,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(widget.student.student_designation),
-                                SizedBox(height: 4),
-                                Text(
-                                    '${widget.student.studentDept} - ${widget.student.studentYear}'),
                               ],
                             ),
                           ),
@@ -347,6 +344,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             },
                             icon: Icon(Icons.edit),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Department',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                widget.student.studentDept,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Year',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                widget.student.studentYear,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
                           ),
                         ],
                       ),
